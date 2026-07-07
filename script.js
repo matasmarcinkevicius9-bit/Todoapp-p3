@@ -3,6 +3,7 @@
 
   const form = document.getElementById("todo-form");
   const input = document.getElementById("todo-input");
+  const dateInput = document.getElementById("todo-datetime");
   const list = document.getElementById("todo-list");
   const summary = document.getElementById("task-summary");
   const clearCompletedBtn = document.getElementById("clear-completed");
@@ -27,6 +28,21 @@
 
   function uid() {
     return Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+  }
+
+  function formatDue(iso) {
+    const date = new Date(iso);
+    if (Number.isNaN(date.getTime())) return "";
+    const datePart = date.toLocaleDateString(undefined, {
+      weekday: "short",
+      month: "short",
+      day: "numeric",
+    });
+    const timePart = date.toLocaleTimeString(undefined, {
+      hour: "numeric",
+      minute: "2-digit",
+    });
+    return `${datePart}, ${timePart}`;
   }
 
   function getFilteredTodos() {
@@ -62,11 +78,20 @@
     const checkbox = node.querySelector(".todo-checkbox");
     const text = node.querySelector(".todo-text");
     const editInput = node.querySelector(".todo-edit-input");
+    const dueBadge = node.querySelector(".todo-due");
     const deleteBtn = node.querySelector(".delete-btn");
 
     checkbox.checked = todo.completed;
     text.textContent = todo.text;
     editInput.value = todo.text;
+
+    if (todo.due) {
+      dueBadge.textContent = formatDue(todo.due);
+      const isOverdue = !todo.completed && new Date(todo.due).getTime() < Date.now();
+      dueBadge.classList.toggle("overdue", isOverdue);
+    } else {
+      dueBadge.remove();
+    }
 
     checkbox.addEventListener("change", () => {
       todo.completed = checkbox.checked;
@@ -118,8 +143,10 @@
     e.preventDefault();
     const value = input.value.trim();
     if (!value) return;
-    todos.push({ id: uid(), text: value, completed: false });
+    const due = dateInput.value ? new Date(dateInput.value).toISOString() : null;
+    todos.push({ id: uid(), text: value, completed: false, due });
     input.value = "";
+    dateInput.value = "";
     render();
   });
 

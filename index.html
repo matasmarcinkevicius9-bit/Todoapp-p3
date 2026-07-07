@@ -21,7 +21,14 @@
         autocomplete="off"
         maxlength="200"
       >
-      <button type="submit">Add</button>
+      <div class="form-row">
+        <input
+          type="datetime-local"
+          id="todo-datetime"
+          aria-label="Due date and time"
+        >
+        <button type="submit">Add task</button>
+      </div>
     </form>
 
     <div class="filters" role="tablist">
@@ -43,8 +50,11 @@
         <input type="checkbox" class="todo-checkbox">
         <span class="checkmark"></span>
       </label>
-      <span class="todo-text"></span>
-      <input type="text" class="todo-edit-input" maxlength="200">
+      <div class="todo-main">
+        <span class="todo-text"></span>
+        <input type="text" class="todo-edit-input" maxlength="200">
+        <span class="todo-due"></span>
+      </div>
       <button class="delete-btn" title="Delete task" aria-label="Delete task">&times;</button>
     </li>
   </template>
