@@ -1,4 +1,14 @@
 (() => {
+  const THEME_KEY = "theme";
+  const themeToggle = document.getElementById("theme-toggle");
+
+  themeToggle.addEventListener("click", () => {
+    const current = document.documentElement.getAttribute("data-theme");
+    const next = current === "dark" ? "light" : "dark";
+    document.documentElement.setAttribute("data-theme", next);
+    localStorage.setItem(THEME_KEY, next);
+  });
+
   const STORAGE_KEY = "todos";
 
   const form = document.getElementById("todo-form");
