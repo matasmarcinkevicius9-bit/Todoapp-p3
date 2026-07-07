@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Todo</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+    <header class="app-header">
+      <h1>Todo</h1>
+      <p class="subtitle" id="task-summary">No tasks yet</p>
+    </header>
+
+    <form id="todo-form" class="todo-form">
+      <input
+        type="text"
+        id="todo-input"
+        placeholder="What needs to be done?"
+        autocomplete="off"
+        maxlength="200"
+      >
+      <button type="submit">Add</button>
+    </form>
+
+    <div class="filters" role="tablist">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="active">Active</button>
+      <button class="filter-btn" data-filter="completed">Completed</button>
+    </div>
+
+    <ul id="todo-list" class="todo-list"></ul>
+
+    <div class="list-footer">
+      <button id="clear-completed" class="text-btn">Clear completed</button>
+    </div>
+  </div>
+
+  <template id="todo-item-template">
+    <li class="todo-item">
+      <label class="todo-check">
+        <input type="checkbox" class="todo-checkbox">
+        <span class="checkmark"></span>
+      </label>
+      <span class="todo-text"></span>
+      <input type="text" class="todo-edit-input" maxlength="200">
+      <button class="delete-btn" title="Delete task" aria-label="Delete task">&times;</button>
+    </li>
+  </template>
+
+  <script src="script.js"></script>
+</body>
+</html>
